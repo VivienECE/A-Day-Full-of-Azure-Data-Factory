@@ -1,0 +1,14 @@
+{
+	"name": "TrainingKeys01withUMI",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://TrainingKeys01.vault.azure.net/",
+			"credential": {
+				"referenceName": "TrainingCredential01",
+				"type": "CredentialReference"
+			}
+		}
+	}
+}
