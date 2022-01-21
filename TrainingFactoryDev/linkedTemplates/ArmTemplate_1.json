@@ -13,6 +13,255 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/LaptopFilePersonCSV')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LaptopFiles",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Laptop"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": "Person.csv",
+						"folderPath": "ForUpload/People"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LaptopFolders')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LaptopFiles",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"Directory": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Laptop"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"folderPath": {
+							"value": "@dataset().Directory",
+							"type": "Expression"
+						}
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LaptopsFiles')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LaptopFiles",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"Directory": {
+						"type": "string"
+					},
+					"File": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Laptop"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@dataset().File",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().Directory",
+							"type": "Expression"
+						}
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TableOrderSummary')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "trainingdb01",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQLDB"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "SalesOrderNumber",
+						"type": "varchar"
+					},
+					{
+						"name": "RecordCount",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "OrderSummary"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/WranglingOrderAggregation')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "WranglingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"name": "LakeFileOrderDetailLinesParquet",
+							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet') ~>  LakeFileOrderDetailLinesParquet",
+							"dataset": {
+								"referenceName": "LakeFileOrderDetailLinesParquet",
+								"type": "DatasetReference"
+							}
+						}
+					],
+					"script": "section Section1;\r\nshared LakeFileOrderDetailLinesParquet = let\r\n  AdfDoc = Web.Contents(\"https://traininglake01.dfs.core.windows.net/datawarehouse/Raw/OrderDetailLines.parquet?sv=2018-03-28&sig=5R%2BzQI0dTqfGUYi8vVuzKhHq6DBYMX%2FYNyfH4c1BalM%3D&spr=https&se=2020-09-02T12%3A16%3A29Z&srt=sco&ss=bf&sp=rwl\"),\r\n  Parquet = Parquet.Document(AdfDoc)\r\nin\r\n  Parquet;\r\nshared UserQuery = let\r\n  Source = LakeFileOrderDetailLinesParquet\r\nin\r\n  Source;\r\n"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/01 - Upload - Simple')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Upload Person",
+						"description": "hfdhgfdhfd",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "LaptopFilePersonCSV",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "LakeFilePersonCSV",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Demo Pipelines/Data Uploads"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/LaptopFilePersonCSV')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/02 - Upload - Copy Params')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -84,12 +333,18 @@
 						]
 					}
 				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
 				"folder": {
 					"name": "Demo Pipelines/Data Uploads"
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/LaptopsFiles')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/03 - Upload - From Discovery')]",
@@ -222,12 +477,19 @@
 						}
 					}
 				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
 				"folder": {
 					"name": "Demo Pipelines/Data Uploads"
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/LaptopFolders')]",
+				"[concat(variables('factoryId'), '/datasets/LaptopsFiles')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/04 - Upload - From Metadata')]",
@@ -486,6 +748,10 @@
 						}
 					}
 				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
 				"variables": {
 					"DemoVariable": {
 						"type": "String"
@@ -496,7 +762,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/LaptopsFiles')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Lazy Replication')]",
@@ -641,6 +909,10 @@
 						}
 					}
 				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
 				"parameters": {
 					"SourceConnectionSecret": {
 						"type": "string",
@@ -749,6 +1021,10 @@
 						}
 					}
 				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
 				"parameters": {
 					"BucketId": {
 						"type": "int"
@@ -801,42 +1077,12 @@
 							"name": "OrderLineCount"
 						}
 					],
-					"script": "source(output(\n\t\tSalesOrderID as integer,\n\t\tRevisionNumber as integer,\n\t\tOrderDate as timestamp,\n\t\tDueDate as timestamp,\n\t\tShipDate as timestamp,\n\t\tStatus as integer,\n\t\tOnlineOrderFlag as boolean,\n\t\tSalesOrderNumber as string,\n\t\tPurchaseOrderNumber as string,\n\t\tAccountNumber as string,\n\t\tCustomerID as integer,\n\t\tShipToAddressID as integer,\n\t\tBillToAddressID as integer,\n\t\tShipMethod as string,\n\t\tCreditCardApprovalCode as string,\n\t\tSubTotal as decimal(19,4),\n\t\tTaxAmt as decimal(19,4),\n\t\tFreight as decimal(19,4),\n\t\tTotalDue as decimal(19,4),\n\t\tComment as string,\n\t\trowguid as string,\n\t\tModifiedDate as timestamp\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\tpartitionBy('hash', 1)) ~> OrderHeader\nsource(output(\n\t\tSalesOrderID as integer,\n\t\tSalesOrderDetailID as integer,\n\t\tOrderQty as integer,\n\t\tProductID as integer,\n\t\tUnitPrice as decimal(19,4),\n\t\tUnitPriceDiscount as decimal(19,4),\n\t\tLineTotal as decimal(38,6),\n\t\trowguid as string,\n\t\tModifiedDate as timestamp\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\tpartitionBy('hash', 1)) ~> OrderLineDetails\nOrderHeader, OrderLineDetails join(OrderHeader@SalesOrderID == OrderLineDetails@SalesOrderID,\n\tjoinType:'inner',\n\tpartitionBy('hash', 1),\n\tbroadcast: 'both')~> JoinHeaderToLineDetails\nJoinHeaderToLineDetails aggregate(groupBy(SalesOrderNumber),\n\tRecordCount = count(SalesOrderDetailID),\n\tpartitionBy('roundRobin', 4)) ~> OrderLineCount\nOrderLineCount sink(input(\n\t\tSalesOrderNumber as string,\n\t\tRecordCount as integer\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tmapColumn(\n\t\tSalesOrderNumber,\n\t\tRecordCount\n\t),\n\tpartitionBy('roundRobin', 4),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> OrderSummary"
+					"script": "source(output(\n\t\tSalesOrderID as integer,\n\t\tRevisionNumber as integer,\n\t\tOrderDate as timestamp,\n\t\tDueDate as timestamp,\n\t\tShipDate as timestamp,\n\t\tStatus as integer,\n\t\tOnlineOrderFlag as boolean,\n\t\tSalesOrderNumber as string,\n\t\tPurchaseOrderNumber as string,\n\t\tAccountNumber as string,\n\t\tCustomerID as integer,\n\t\tShipToAddressID as integer,\n\t\tBillToAddressID as integer,\n\t\tShipMethod as string,\n\t\tCreditCardApprovalCode as string,\n\t\tSubTotal as decimal(19,4),\n\t\tTaxAmt as decimal(19,4),\n\t\tFreight as decimal(19,4),\n\t\tTotalDue as decimal(19,4),\n\t\tComment as string,\n\t\trowguid as string,\n\t\tModifiedDate as timestamp\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\tpartitionBy('hash', 1)) ~> OrderHeader\nsource(output(\n\t\tSalesOrderID as integer,\n\t\tSalesOrderDetailID as integer,\n\t\tOrderQty as integer,\n\t\tProductID as integer,\n\t\tUnitPrice as decimal(19,4),\n\t\tUnitPriceDiscount as decimal(19,4),\n\t\tLineTotal as decimal(38,6),\n\t\trowguid as string,\n\t\tModifiedDate as timestamp\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet',\n\tpartitionBy('hash', 1)) ~> OrderLineDetails\nOrderHeader, OrderLineDetails join(OrderHeader@SalesOrderID == OrderLineDetails@SalesOrderID,\n\tjoinType:'inner',\n\tpartitionBy('hash', 1),\n\tbroadcast: 'both')~> JoinHeaderToLineDetails\nJoinHeaderToLineDetails aggregate(groupBy(SalesOrderNumber),\n\tRecordCount = count(SalesOrderDetailID),\n\tpartitionBy('roundRobin', 4)) ~> OrderLineCount\nOrderLineCount sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tSalesOrderNumber as string,\n\t\tRecordCount as integer\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tSalesOrderNumber,\n\t\tRecordCount\n\t),\n\tpartitionBy('roundRobin', 4)) ~> OrderSummary"
 				}
 			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/WranglingOrderAggregation')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "WranglingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"name": "LakeFileOrderDetailLinesParquet",
-							"script": "",
-							"dataset": {
-								"referenceName": "LakeFileOrderDetailLinesParquet",
-								"type": "DatasetReference"
-							}
-						}
-					],
-					"sinks": [
-						{
-							"name": "Sink1",
-							"dataset": {
-								"referenceName": "TableOrderSummary",
-								"type": "DatasetReference"
-							},
-							"script": "sink(input(\n\t\tSalesOrderNumber as string,\n\t\tRecordCount as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Sink1"
-						}
-					],
-					"script": "section Section1;\r\nshared LakeFileOrderDetailLinesParquet = let\r\n  AdfDoc = Web.Contents(\"https://traininglake01.dfs.core.windows.net/datawarehouse/Raw/OrderDetailLines.parquet?sv=2018-03-28&sig=5R%2BzQI0dTqfGUYi8vVuzKhHq6DBYMX%2FYNyfH4c1BalM%3D&spr=https&se=2020-09-02T12%3A16%3A29Z&srt=sco&ss=bf&sp=rwl\"),\r\n  Parquet = Parquet.Document(AdfDoc)\r\nin\r\n  Parquet;\r\nshared UserQuery = let\r\n  Source = LakeFileOrderDetailLinesParquet\r\nin\r\n  Source;\r\n"
-				}
-			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/TableOrderSummary')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Order Summary with Mapping')]",
@@ -871,10 +1117,15 @@
 							"compute": {
 								"coreCount": 8,
 								"computeType": "General"
-							}
+							},
+							"traceLevel": "Fine"
 						}
 					}
 				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
 				"folder": {
 					"name": "Demo Pipelines/Data Flows"
 				},
@@ -1059,6 +1310,10 @@
 						}
 					}
 				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
 				"folder": {
 					"name": "Demo Pipelines/Scaling Out"
 				},

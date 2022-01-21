@@ -43,6 +43,18 @@
 			"type": "string",
 			"defaultValue": "/subscriptions/77a3e40b-dd36-433c-90ca-a09f39724af3/resourcegroups/CommunityDemos/providers/Microsoft.DataFactory/factories/PaulsFunFactoryV2/integrationruntimes/WorkLaptop"
 		},
+		"AzureKeyVault1_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/450eaf4d-1124-4b6d-b490-95dedc991c1e/resourceGroups/Training/providers/Microsoft.KeyVault/vaults/TrainingKeys01"
+		},
+		"AzureKeyVault1_properties_groupId": {
+			"type": "string",
+			"defaultValue": "vault"
+		},
+		"TrainingKeys01withUMI_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://TrainingKeys01.vault.azure.net/"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -96,6 +108,15 @@
 					},
 					"traininglake01_properties_typeProperties_url": {
 						"value": "[parameters('traininglake01_properties_typeProperties_url')]"
+					},
+					"AzureKeyVault1_properties_privateLinkResourceId": {
+						"value": "[parameters('AzureKeyVault1_properties_privateLinkResourceId')]"
+					},
+					"AzureKeyVault1_properties_groupId": {
+						"value": "[parameters('AzureKeyVault1_properties_groupId')]"
+					},
+					"TrainingKeys01withUMI_properties_typeProperties_baseUrl": {
+						"value": "[parameters('TrainingKeys01withUMI_properties_typeProperties_baseUrl')]"
 					}
 				}
 			},
