@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": "echo \"Hello World\"",
+					"command": "CustomActivity.exe",
 					"resourceLinkedService": {
 						"referenceName": "TrainingStore01",
 						"type": "LinkedServiceReference"
