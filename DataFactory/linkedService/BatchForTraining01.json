@@ -1,0 +1,16 @@
+{
+	"name": "BatchForTraining01",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBatch",
+		"typeProperties": {
+			"batchUri": "https://batchfortraining01.uksouth.batch.azure.com",
+			"poolName": "1",
+			"accountName": "batchfortraining01",
+			"linkedServiceName": {
+				"referenceName": "TrainingStore01",
+				"type": "LinkedServiceReference"
+			}
+		}
+	}
+}
