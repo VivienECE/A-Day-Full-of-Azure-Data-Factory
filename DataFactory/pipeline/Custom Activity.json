@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Custom1",
+				"name": "HelloWorld",
 				"type": "Custom",
 				"dependsOn": [],
 				"policy": {
