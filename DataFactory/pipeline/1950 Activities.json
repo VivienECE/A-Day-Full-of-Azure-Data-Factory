@@ -369,6 +369,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "Demo Pipelines/Misc"
+		},
 		"annotations": [],
 		"lastPublishTime": "2021-10-06T09:18:07Z"
 	},
