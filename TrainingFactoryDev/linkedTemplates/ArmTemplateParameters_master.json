@@ -5,11 +5,23 @@
 		"factoryName": {
 			"value": "TrainingFactoryDev"
 		},
+		"TrainingStore01_connectionString": {
+			"value": ""
+		},
 		"traininglake01noneKV_accountKey": {
 			"value": ""
 		},
 		"AnyDatabaseConnection_properties_typeProperties_connectionString_secretName": {
 			"value": "@linkedService().DBConnectionSecret"
+		},
+		"BatchForTraining01_properties_typeProperties_batchUri": {
+			"value": "https://batchfortraining01.uksouth.batch.azure.com"
+		},
+		"BatchForTraining01_properties_typeProperties_poolName": {
+			"value": "09a2ec47-0cc8-4492-935c-04852e3ec654"
+		},
+		"BatchForTraining01_properties_typeProperties_accountName": {
+			"value": "batchfortraining01"
 		},
 		"LaptopFiles_properties_typeProperties_host": {
 			"value": "C:\\ADFRoot\\"
@@ -18,6 +30,9 @@
 			"value": "ADFIRUser"
 		},
 		"TrainingKeys01_properties_typeProperties_baseUrl": {
+			"value": "https://TrainingKeys01.vault.azure.net/"
+		},
+		"TrainingKeys01withUMI_properties_typeProperties_baseUrl": {
 			"value": "https://TrainingKeys01.vault.azure.net/"
 		},
 		"trainingdb01_properties_typeProperties_connectionString_secretName": {
@@ -37,9 +52,6 @@
 		},
 		"AzureKeyVault1_properties_groupId": {
 			"value": "vault"
-		},
-		"TrainingKeys01withUMI_properties_typeProperties_baseUrl": {
-			"value": "https://TrainingKeys01.vault.azure.net/"
 		},
 		"containerUri": {
 			"value": ""

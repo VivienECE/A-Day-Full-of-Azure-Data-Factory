@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "TrainingFactoryDev"
 		},
+		"TrainingStore01_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'TrainingStore01'"
+		},
 		"traininglake01noneKV_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'traininglake01noneKV'"
@@ -14,6 +18,18 @@
 		"AnyDatabaseConnection_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
 			"defaultValue": "@linkedService().DBConnectionSecret"
+		},
+		"BatchForTraining01_properties_typeProperties_batchUri": {
+			"type": "string",
+			"defaultValue": "https://batchfortraining01.uksouth.batch.azure.com"
+		},
+		"BatchForTraining01_properties_typeProperties_poolName": {
+			"type": "string",
+			"defaultValue": "09a2ec47-0cc8-4492-935c-04852e3ec654"
+		},
+		"BatchForTraining01_properties_typeProperties_accountName": {
+			"type": "string",
+			"defaultValue": "batchfortraining01"
 		},
 		"LaptopFiles_properties_typeProperties_host": {
 			"type": "string",
@@ -24,6 +40,10 @@
 			"defaultValue": "ADFIRUser"
 		},
 		"TrainingKeys01_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://TrainingKeys01.vault.azure.net/"
+		},
+		"TrainingKeys01withUMI_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://TrainingKeys01.vault.azure.net/"
 		},
@@ -50,10 +70,6 @@
 		"AzureKeyVault1_properties_groupId": {
 			"type": "string",
 			"defaultValue": "vault"
-		},
-		"TrainingKeys01withUMI_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://TrainingKeys01.vault.azure.net/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -82,6 +98,9 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"TrainingStore01_connectionString": {
+						"value": "[parameters('TrainingStore01_connectionString')]"
+					},
 					"traininglake01noneKV_accountKey": {
 						"value": "[parameters('traininglake01noneKV_accountKey')]"
 					},
@@ -97,11 +116,23 @@
 					"AnyDatabaseConnection_properties_typeProperties_connectionString_secretName": {
 						"value": "[parameters('AnyDatabaseConnection_properties_typeProperties_connectionString_secretName')]"
 					},
+					"BatchForTraining01_properties_typeProperties_batchUri": {
+						"value": "[parameters('BatchForTraining01_properties_typeProperties_batchUri')]"
+					},
+					"BatchForTraining01_properties_typeProperties_poolName": {
+						"value": "[parameters('BatchForTraining01_properties_typeProperties_poolName')]"
+					},
+					"BatchForTraining01_properties_typeProperties_accountName": {
+						"value": "[parameters('BatchForTraining01_properties_typeProperties_accountName')]"
+					},
 					"LaptopFiles_properties_typeProperties_host": {
 						"value": "[parameters('LaptopFiles_properties_typeProperties_host')]"
 					},
 					"LaptopFiles_properties_typeProperties_userId": {
 						"value": "[parameters('LaptopFiles_properties_typeProperties_userId')]"
+					},
+					"TrainingKeys01withUMI_properties_typeProperties_baseUrl": {
+						"value": "[parameters('TrainingKeys01withUMI_properties_typeProperties_baseUrl')]"
 					},
 					"trainingdb01_properties_typeProperties_connectionString_secretName": {
 						"value": "[parameters('trainingdb01_properties_typeProperties_connectionString_secretName')]"
@@ -114,9 +145,6 @@
 					},
 					"AzureKeyVault1_properties_groupId": {
 						"value": "[parameters('AzureKeyVault1_properties_groupId')]"
-					},
-					"TrainingKeys01withUMI_properties_typeProperties_baseUrl": {
-						"value": "[parameters('TrainingKeys01withUMI_properties_typeProperties_baseUrl')]"
 					}
 				}
 			},
