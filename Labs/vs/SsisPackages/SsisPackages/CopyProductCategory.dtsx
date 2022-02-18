@@ -7,12 +7,12 @@
   DTS:CreatorName="DESKTOP-T3L61F1\Richard"
   DTS:DTSID="{D99D7963-C308-43A9-A7B4-956E3178534B}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="15.0.2000.128"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
   DTS:LocaleID="2057"
   DTS:ObjectName="CopyProductCategory"
   DTS:PackageType="5"
-  DTS:VersionBuild="8"
-  DTS:VersionGUID="{0BEEFFF7-A042-4855-8EF6-194FDD3AFF3F}">
+  DTS:VersionBuild="9"
+  DTS:VersionGUID="{8AA7EF14-1FD5-4192-8471-FF10F4C02F4C}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -23,11 +23,11 @@
       DTS:ObjectName="AzureDataLakeStorage">
       <DTS:ObjectData>
         <AzureStorageConnectionManager
-          ConnectionString="ServiceType=AzureBlobFS;ConnectUsingManagedIdentity=True;AccountName=mydatalakestorage;DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;"
+          ConnectionString="ServiceType=AzureBlobFS;ConnectUsingManagedIdentity=True;AccountName=dlsvdlab01;DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;"
           ConnectByProxy="False">
           <AccountKey
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAALRKo0Vm/BkOsUrO9CQkY/QAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAAj9D/6eDUxpBbXGcJVL6vp82ez2ul3aK+Ni8U5W7zFVQAAAAAOgAAAAAIAACAAAABbwz4bLoC0/FHBR4yRUyHat9AZ1Zzq+cGQqCe+uQ7BwzAAAABgM//i+vUc1m9CFcoSVna6Ln4M/it1TGx3a75R5g74fhEyHQtIR/ghZfvnAWMnQDJAAAAAB1yg/8cBdcctyLfS9gVtvZhKCsK2yEAN94vaqS1BKLwR8ILLQbLlTuTJBvTvQHQb0YOEcv9gE7nddLKCzX0Tng</AccountKey>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAjbRiT3nCtEyNsu1AKnMOGgAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAAzVSbBCbY4Mf8kp/B0WTDTihhgAOQP/mi5D0+kcJgPVAAAAAAOgAAAAAIAACAAAADhM+gQPkldr79pJpSaB+32aZDVH2XcT/mp3+u8PQGCDiAAAAATCsQT/lkz5zT3PZDwB/KUZXOsDepmmE0NT/aEas750kAAAACvgeySmGlSxh+ysaO20vP1lKF2S/0IZ9a/IVhnHmpfhT+bIbo9O/F6GQqUZQyAVoQGOePNqKiJSXTkfiEF/E3h</AccountKey>
         </AzureStorageConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -38,7 +38,14 @@
       DTS:ObjectName="AzureSqlDatabase">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=myazuresqlserver.database.windows.net;User ID=sqlserverlogin;Initial Catalog=AdventureWorks;Provider=SQLNCLI11.1;Auto Translate=False;" />
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=sql-vd-lab.database.windows.net;User ID=adminvivien;Initial Catalog=sqldb-vd-lab;Provider=SQLNCLI11.1;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAjbRiT3nCtEyNsu1AKnMOGgAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAAXXy6NnvrXba53mM8ZaqoOpHvw3RMRnjQGA+Ma8UYCTAAAAAAOgAAAAAIAACAAAAAVof9SC0xT0uBRptHCrwjg35oQRkMKxMJ43rqNOV4JFiAAAAAKpV9ckDDLwiaNOxZjkKY604XlAkPPWvZYViFviLLd/kAAAACLXJfT7OgSsezqgj9R7JLgVVNTjuDsb8ZXjblUhCQn8oC0Wqo3gAc2PW4zImI5jqL4utcMPjEzPySs8baFKMz6</DTS:Password>
+        </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -405,19 +412,19 @@
     </DTS:Executable>
   </DTS:Executables>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
-<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
-<!--If you manually edit this section and make a mistake, you can delete it. -->
-<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<!--Cette section CDATA contient des informations sur la disposition du package. Elle comprend des informations telles que les coordonnées (x,y), la largeur et la hauteur.-->
+<!--Si vous modifiez manuellement cette section et commettez une erreur, vous pouvez la supprimer. -->
+<!--Le package pourra toujours se charger normalement, mais les informations de disposition précédente seront perdues et le concepteur réorganisera automatiquement les éléments sur l'aire de conception.-->
 <Objects
   Version="8">
-  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <!--Chaque nœud ci-dessous contiendra des propriétés qui n'affectent pas le comportement d'exécution.-->
   <Package
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
         <NodeLayout
-          Size="214,42"
+          Size="214.4,41.6"
           Id="Package\DFT Copy ProductCategory"
           TopLeft="193,104" />
       </GraphLayout>
@@ -427,49 +434,47 @@
     design-time-name="Package\DFT Copy ProductCategory">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="224,42"
+          Size="216,41.6"
           Id="Package\DFT Copy ProductCategory\OLEDB_Src ProductCategory"
           TopLeft="401,94" />
         <NodeLayout
-          Size="171,42"
+          Size="171.2,41.6"
           Id="Package\DFT Copy ProductCategory\FFD lakeroot_Raw"
           TopLeft="449,240" />
         <EdgeLayout
           Id="Package\DFT Copy ProductCategory.Paths[OLE DB Source Output]"
-          TopLeft="513,136">
+          TopLeft="509,135.6">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="21.5,104"
+              EndConnector="25.6,104.4"
               Start="0,0"
-              End="21.5,96.5">
+              End="25.6,96.9">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,48" />
+                    End="0,48.2" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,48"
-                    Point2="0,52"
-                    Point3="4,52" />
+                    Point1="0,48.2"
+                    Point2="0,52.2"
+                    Point3="4,52.2" />
                   <mssgle:LineSegment
-                    End="17.5,52" />
+                    End="21.6,52.2" />
                   <mssgle:CubicBezierSegment
-                    Point1="17.5,52"
-                    Point2="21.5,52"
-                    Point3="21.5,56" />
+                    Point1="21.6,52.2"
+                    Point2="25.6,52.2"
+                    Point3="25.6,56.2" />
                   <mssgle:LineSegment
-                    End="21.5,96.5" />
+                    End="25.6,96.9" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
