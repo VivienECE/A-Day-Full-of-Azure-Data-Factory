@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "Product",
 	"properties": {
 		"activities": [
 			{
@@ -49,7 +49,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "datalake",
+						"referenceName": "dls_raw",
 						"type": "DatasetReference"
 					}
 				]

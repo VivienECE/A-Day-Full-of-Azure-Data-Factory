@@ -1,5 +1,5 @@
 {
-	"name": "dls_raw",
+	"name": "dls_Product",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "SalesLT.ProductCategory.txt",
 				"folderPath": "Raw",
 				"fileSystem": "lakeroot"
 			},
