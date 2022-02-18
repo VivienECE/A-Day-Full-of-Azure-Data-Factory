@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "Product",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -13,8 +13,12 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Product"
+			"transformations": [
+				{
+					"name": "SelProductColumn"
+				}
+			],
+			"script": "source(output(\n\t\tProductID as short,\n\t\tName as string,\n\t\tProductNumber as string,\n\t\tColor as string,\n\t\tStandardCost as double,\n\t\tListPrice as double,\n\t\tSize as string,\n\t\tWeight as double,\n\t\tProductCategoryID as short,\n\t\tProductModelID as short,\n\t\tSellStartDate as string,\n\t\tSellEndDate as string,\n\t\tDiscontinuedDate as string,\n\t\tThumbNailPhoto as string,\n\t\tThumbnailPhotoFileName as string,\n\t\trowguid as string,\n\t\tModifiedDate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Product\nProduct select(mapColumn(\n\t\tProductID,\n\t\tProduct = Name,\n\t\tProductCategoryID,\n\t\tProductModelID\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelProductColumn"
 		}
 	}
 }
