@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "pipeline1_copy1",
 	"properties": {
 		"activities": [
 			{
@@ -43,7 +43,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "sql_Product",
+						"referenceName": "sql_ProductModel",
 						"type": "DatasetReference"
 					}
 				],

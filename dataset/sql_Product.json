@@ -1,5 +1,5 @@
 {
-	"name": "sql",
+	"name": "sql_Product",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql",
