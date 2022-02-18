@@ -541,7 +541,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "SalesLT.ProductCategory.txt",
+						"fileName": "SalesLT.Product.txt",
 						"folderPath": "Raw",
 						"fileSystem": "lakeroot"
 					},
@@ -570,7 +570,9 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileSystem": "raw"
+						"fileName": "SalesLT.ProductModel.txt",
+						"folderPath": "Raw",
+						"fileSystem": "lakeroot"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -584,7 +586,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ProductCategory')]",
+			"name": "[concat(parameters('factoryName'), '/dls_ProductCategory')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -597,7 +599,9 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileSystem": "raw"
+						"fileName": "SalesLT.ProductCategory.txt",
+						"folderPath": "Raw",
+						"fileSystem": "lakeroot"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
