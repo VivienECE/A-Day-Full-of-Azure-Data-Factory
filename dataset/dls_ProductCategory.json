@@ -1,5 +1,5 @@
 {
-	"name": "ProductCategory",
+	"name": "dls_ProductCategory",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
