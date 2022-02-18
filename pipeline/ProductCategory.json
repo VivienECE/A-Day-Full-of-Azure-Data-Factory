@@ -43,7 +43,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "sql_ProductModel",
+						"referenceName": "sql_ProductCategory",
 						"type": "DatasetReference"
 					}
 				],
