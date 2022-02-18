@@ -59,8 +59,14 @@
 								},
 								"waitOnCompletion": true,
 								"parameters": {
-									"TableSchema": "@item()TABLE_SCHEMA",
-									"TableName": "@item().TABLE_NAME"
+									"TableSchema": {
+										"value": "@item().TABLE_SCHEMA",
+										"type": "Expression"
+									},
+									"TableName": {
+										"value": "@item().TABLE_NAME",
+										"type": "Expression"
+									}
 								}
 							}
 						}
