@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "SalesLT.ProductCategory.txt",
+				"fileName": "SalesLT.Product.txt",
 				"folderPath": "Raw",
 				"fileSystem": "lakeroot"
 			},
