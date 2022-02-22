@@ -10,8 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "Raw",
-				"fileSystem": "lakeroot"
+				"fileSystem": "pvt-transfert"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
