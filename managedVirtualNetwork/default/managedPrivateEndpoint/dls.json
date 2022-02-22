@@ -1,0 +1,7 @@
+{
+	"name": "dls",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/f18ca379-04d5-43d1-87b0-ed12ee2fe9e2/resourceGroups/TrainingWassim/providers/Microsoft.Storage/storageAccounts/dlsvdlab02",
+		"groupId": "blob"
+	}
+}
