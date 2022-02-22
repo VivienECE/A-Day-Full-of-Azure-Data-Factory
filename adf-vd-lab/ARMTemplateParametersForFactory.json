@@ -22,6 +22,18 @@
 		},
 		"integrationRuntime1_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
 			"value": ""
+		},
+		"dls_properties_privateLinkResourceId": {
+			"value": "/subscriptions/f18ca379-04d5-43d1-87b0-ed12ee2fe9e2/resourceGroups/TrainingWassim/providers/Microsoft.Storage/storageAccounts/dlsvdlab02"
+		},
+		"dls_properties_groupId": {
+			"value": "blob"
+		},
+		"sql_properties_privateLinkResourceId": {
+			"value": "/subscriptions/f18ca379-04d5-43d1-87b0-ed12ee2fe9e2/resourceGroups/TrainingWassim/providers/Microsoft.Sql/servers/sql-vd-lab"
+		},
+		"sql_properties_groupId": {
+			"value": "sqlServer"
 		}
 	}
 }

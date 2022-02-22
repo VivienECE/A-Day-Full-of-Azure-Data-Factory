@@ -30,6 +30,22 @@
 		"integrationRuntime1_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
 			"type": "secureString"
 		},
+		"dls_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/f18ca379-04d5-43d1-87b0-ed12ee2fe9e2/resourceGroups/TrainingWassim/providers/Microsoft.Storage/storageAccounts/dlsvdlab02"
+		},
+		"dls_properties_groupId": {
+			"type": "string",
+			"defaultValue": "blob"
+		},
+		"sql_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/f18ca379-04d5-43d1-87b0-ed12ee2fe9e2/resourceGroups/TrainingWassim/providers/Microsoft.Sql/servers/sql-vd-lab"
+		},
+		"sql_properties_groupId": {
+			"type": "string",
+			"defaultValue": "sqlServer"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI pour le compte de stockage contenant des modèles ARM liés"
@@ -63,9 +79,6 @@
 					"sql_connectionString": {
 						"value": "[parameters('sql_connectionString')]"
 					},
-					"AzureDataLakeStorage1_properties_typeProperties_url": {
-						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
-					},
 					"integrationRuntime1_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
 						"value": "[parameters('integrationRuntime1_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint')]"
 					},
@@ -74,6 +87,21 @@
 					},
 					"integrationRuntime1_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
 						"value": "[parameters('integrationRuntime1_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword')]"
+					},
+					"dls_properties_privateLinkResourceId": {
+						"value": "[parameters('dls_properties_privateLinkResourceId')]"
+					},
+					"dls_properties_groupId": {
+						"value": "[parameters('dls_properties_groupId')]"
+					},
+					"sql_properties_privateLinkResourceId": {
+						"value": "[parameters('sql_properties_privateLinkResourceId')]"
+					},
+					"sql_properties_groupId": {
+						"value": "[parameters('sql_properties_groupId')]"
+					},
+					"AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					}
 				}
 			},

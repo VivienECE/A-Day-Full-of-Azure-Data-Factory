@@ -29,6 +29,22 @@
 		},
 		"integrationRuntime1_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
 			"type": "secureString"
+		},
+		"dls_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/f18ca379-04d5-43d1-87b0-ed12ee2fe9e2/resourceGroups/TrainingWassim/providers/Microsoft.Storage/storageAccounts/dlsvdlab02"
+		},
+		"dls_properties_groupId": {
+			"type": "string",
+			"defaultValue": "blob"
+		},
+		"sql_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/f18ca379-04d5-43d1-87b0-ed12ee2fe9e2/resourceGroups/TrainingWassim/providers/Microsoft.Sql/servers/sql-vd-lab"
+		},
+		"sql_properties_groupId": {
+			"type": "string",
+			"defaultValue": "sqlServer"
 		}
 	},
 	"variables": {
@@ -694,8 +710,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"folderPath": "Raw",
-						"fileSystem": "lakeroot"
+						"fileSystem": "pvt-transfert"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -1163,9 +1178,15 @@
 						"type": "SecureString",
 						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
 					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime2",
+					"type": "IntegrationRuntimeReference"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime2')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/sql')]",
@@ -1176,9 +1197,15 @@
 				"type": "AzureSqlDatabase",
 				"typeProperties": {
 					"connectionString": "[parameters('sql_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime2",
+					"type": "IntegrationRuntimeReference"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime2')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/integrationRuntime1')]",
@@ -1311,6 +1338,30 @@
 			"apiVersion": "2018-06-01",
 			"properties": {},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default/dls')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('dls_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('dls_properties_groupId')]"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default/sql')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('sql_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('sql_properties_groupId')]"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
 		}
 	]
 }
