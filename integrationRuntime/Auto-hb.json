@@ -1,0 +1,6 @@
+{
+	"name": "Auto-hb",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}
