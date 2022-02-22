@@ -12,7 +12,7 @@
 			"value": ""
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
-			"value": "https://dlsvdlab01.dfs.core.windows.net"
+			"value": "https://dlsvdlab02.dfs.core.windows.net"
 		},
 		"integrationRuntime1_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
 			"value": "sql-vd-lab.database.windows.net"
